@@ -6,16 +6,8 @@ module ServiceHelper
       response.body
     end
 
-    def consulta_endpoint_tow
-        response = Faraday.get(URL)
-        response.body
+    def task_ejecute_help
+      Rails ("frogmi:feature_USGS")
     end
 
-    def consulta_paginacion(data)
-        
-        data.each do |dat|
-            puts dat
-        end
-    end
-
-  end
+end

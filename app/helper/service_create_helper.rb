@@ -11,7 +11,7 @@ module ServiceCreateHelper
             #pado 2 si no existe en la base de datos  validamos si cumple los siguientes
             if @existe.nil?
                 #paso 2.1 magnitud > -1.0 && magnitud < 10.0 
-                if a["geometry"]["coordinates"][2] < -1.0 ||  a["geometry"]["coordinates"][2] > 10.0
+                if a["properties"]["mag"] < -1.0 ||  a["properties"]["mag"] > 10.0
                     nil
                 elsif a["geometry"]["coordinates"][0] < -180.0 || a["geometry"]["coordinates"][0] > 180.0                    
                     #paso 2.2 longitud > -180.0 && longitud < 180.0
@@ -19,16 +19,20 @@ module ServiceCreateHelper
                 elsif a["geometry"]["coordinates"][1] < -90.0 || a["geometry"]["coordinates"][0] > 90.0    
                     #paso 2.3 latitud > -90.0 && latitud < 90.0
                     nil
-                else #tocara corregir esta data segun la informacion que generaremos
+                else 
                     objet_data={}
+                    objet_data[:tipo] = a["type"]
                     objet_data[:titulo]= a["properties"]["title"]
                     objet_data[:url]= a["properties"]["url"]
                     objet_data[:place] = a["properties"]["place"]
                     objet_data[:id_feature] = a["id"]
-                    objet_data[:magType] = a["properties"]["magType"]
+                    objet_data[:mag_type] = a["properties"]["magType"]
                     objet_data[:coord_latitud] = a["geometry"]["coordinates"][1]
                     objet_data[:coord_longitud] = a["geometry"]["coordinates"][0]
-                    objet_data[:coord_magnitud] = a["geometry"]["coordinates"][2]
+                    objet_data[:magnitud] = a["properties"]["mag"]
+                    objet_data[:time] = a["properties"]["time"]
+                    objet_data[:tsunami] = a["properties"]["tsunami"]
+                    objet_data[:comment] = []
 
                     # Paso 3  guarda informacion a base de dato y suma 1 al conteo de informacion para enviar respuesta de datos guardados
                     salvar = Api::Feature.new(objet_data)

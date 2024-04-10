@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     resources :features do
       collection do
         get "list_features"
+        get "task_ejecute"
       end
     end
   end

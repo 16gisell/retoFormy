@@ -41,3 +41,4 @@ Things you may want to cover:
 
 * Adjunto documento postman
 - direccion de carpeta public/reto-frogmi.postman_collection.json
+-Front en el cual se consume estos datos : https://github.com/16gisell/retoFormy-vistas

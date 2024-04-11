@@ -1,6 +1,6 @@
 namespace :frogmi do
     desc "Consulta y almacenamiento informacion de datos sismologicos USGS"
-    task :feature_USGS => :environment do
+    task :feature_USGS => [:environment] do
         include ServiceHelper
         include ServiceCreateHelper
 

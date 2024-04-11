@@ -7,7 +7,7 @@ module ServiceHelper
     end
 
     def task_ejecute_help
-      Rails ("frogmi:feature_USGS")
+      Rake::Task['frogmi:feature_USGS'].invoke
     end
 
 end

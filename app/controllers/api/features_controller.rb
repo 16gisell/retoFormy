@@ -9,10 +9,10 @@ class Api::FeaturesController < ApplicationController
         
         if params[:filter].present? && !params[:filter].blank? 
             # Si envia datos en el parametro filter
-            consulta = Api::Feature.where("lower(mag_type) LIKE ?", "%#{params[:filter].downcase}%")
+            consulta = Api::Feature.where("lower(mag_type) LIKE ? OR lower(id_feature) LIKE ?", "%#{params[:filter].downcase}%", "%#{params[:filter].downcase}%").order("id ASC")
         else
             # No envia datos en el parametro filter
-            consulta = Api::Feature.all.paginate(page: page, per_page: perPage)
+            consulta = Api::Feature.all.order("id ASC")
         end
 
         result = consulta.paginate(page: page, per_page: perPage)
@@ -36,6 +36,7 @@ class Api::FeaturesController < ApplicationController
             objet_data[:Attributes][:coordinates][:latitud] = a[:coord_latitud].to_f
             objet_data[:links] = {}
             objet_data[:links][:external_url] = a[:url].to_s
+            objet_data[:comment] = a[:comment]
 
             @data_list << objet_data
         end        
@@ -51,8 +52,8 @@ class Api::FeaturesController < ApplicationController
     end
 
     def task_ejecute
-        @data = task_ejecute_help
-        render json:@data
+        Rake::Task[:feature_USGS].invoke
+        # render json:@data
     end
 
     def list_features 
